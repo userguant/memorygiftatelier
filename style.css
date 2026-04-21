@@ -19,7 +19,6 @@
   --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Portrait lock */
 #portrait-lock {
   display: none;
   position: fixed; inset: 0;
@@ -262,7 +261,6 @@ body::before {
   pointer-events: none;
 }
 #globe-dome.drag-over {
-  /* no effect — snap and glow removed */
 }
 #globe-dome::before {
   content: '';
@@ -327,7 +325,6 @@ body::before {
 }
 #stage-hint.hidden { opacity: 0; }
 
-/* Pedestal base wooden */
 #pedestal-base {
   width: 220px;
   position: relative;
@@ -522,7 +519,6 @@ body::before {
   background: linear-gradient(90deg, transparent, var(--sand), transparent);
 }
 
-/* Scroll track — contains two copies for seamless loop */
 #dock-track {
   display: flex;
   align-items: center;
@@ -766,7 +762,6 @@ body::before {
   to { width: 120px; height: 120px; opacity: 0; transform: translate(-50%,-50%); }
 }
 
-/* Stage drop zone — circle removed, invisible */
 #stage-drop-zone {
   display: none;
 }
@@ -832,14 +827,11 @@ body::before {
 }
 #overflow-msg.show { opacity: 1; }
 
-/* ============ MOBILE LANDSCAPE — scroll layout ============ */
 
-/* Base: hide mobile elements on desktop */
 #mobile-screen-1, #mobile-screen-2,
 #mobile-char-grid, #mobile-gift-section,
 #mobile-scroll-hint { display: none; }
 
-/* Mobile styles — triggered by .is-mobile class on body */
 body.is-mobile {
   overflow: hidden;
   cursor: auto;
@@ -940,7 +932,6 @@ body.is-mobile #card-good-for { margin-top: 5px; gap: 3px; }
 body.is-mobile .good-tag { font-size: 8px; padding: 2px 6px; }
 body.is-mobile #card-description { font-size: 9px; margin: 3px 0; }
 
-/* Globe smaller on mobile */
 body.is-mobile #globe-wrap { width: 180px; height: 190px; }
 body.is-mobile #globe-dome { width: 140px; height: 140px; top: -6px; }
 body.is-mobile #dome-cap { width: 26px; height: 18px; top: -18px; }
@@ -969,13 +960,11 @@ body.is-mobile #pedestal-body { width: 120px; height: 38px; font-size: 9px; }
 body.is-mobile #pedestal-bottom { width: 150px; height: 8px; }
 body.is-mobile #stage-label { font-size: 7px; }
 
-/* Hide desktop-only elements on mobile */
 body.is-mobile #gift-section,
 body.is-mobile #dock,
 body.is-mobile #surprise-btn,
 body.is-mobile #date-stamp { display: none; }
 
-/* Mobile char grid */
 body.is-mobile #mobile-char-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1031,7 +1020,6 @@ body.is-mobile #mobile-char-grid {
   padding-top: 6px;
 }
 
-/* Mobile gift section */
 body.is-mobile #mobile-gift-section {
   display: flex;
   flex: 0 0 33%;
@@ -1081,7 +1069,6 @@ body.is-mobile #mobile-gift-section {
 }
 #mobile-open-btn.visible { display: block; animation: fadeUp 0.5s var(--ease); }
 
-/* ======== ABOUT BUTTON + MODAL ======== */
 #about-btn {
   position: fixed;
   top: 20px; right: 20px;
@@ -1107,7 +1094,6 @@ body.is-mobile #mobile-gift-section {
   color: var(--brown);
 }
 
-/* About modal overlay */
 #about-overlay {
   position: fixed; inset: 0;
   z-index: 8500;
@@ -1139,7 +1125,6 @@ body.is-mobile #mobile-gift-section {
   transform: scale(1) translateY(0);
 }
 
-/* Mobile: scrollable, compact */
 @media (max-height: 600px) {
   #about-overlay {
     align-items: flex-start;
@@ -1166,7 +1151,6 @@ body.is-mobile #mobile-gift-section {
   #about-close { padding: 5px 20px; font-size: 13px; }
 }
 
-/* Top accent line */
 #about-box::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0; height: 3px;
@@ -1250,7 +1234,6 @@ body.is-mobile #mobile-gift-section {
   color: var(--text);
 }
 
-/* ============ LOADING SCREEN ============ */
 #loading-screen {
   position: fixed; inset: 0;
   z-index: 99999;
