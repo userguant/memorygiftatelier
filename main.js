@@ -46,7 +46,6 @@ function generateMessage(collected) {
   return { msg:'A constellation of feelings.', sub:'Whatever you needed — it\'s in here.' };
 }
 
-// State
 let collected = [];
 let stageChar = null;
 let dragging = null;
@@ -58,13 +57,11 @@ const cursor = document.getElementById('cursor');
 const ghost = document.getElementById('drag-ghost');
 const ghostInner = document.getElementById('ghost-inner');
 
-// Cursor
 document.addEventListener('mousemove', e => {
   mouseX = e.clientX; mouseY = e.clientY;
   cursor.style.left = e.clientX+'px';
   cursor.style.top = e.clientY+'px';
   
-  // Smooth ghost follow
   if (dragging) {
     ghostX += (mouseX - ghostX) * 0.6;
     ghostY += (mouseY - ghostY) * 0.6;
@@ -89,11 +86,8 @@ function checkProximity(e) {
     boxEl.classList.remove('drag-near');
     document.getElementById('iso-lid-group').classList.remove('peek');
   }
-
-  // Stage — no visual feedback on drag
 }
 
-// Build dock — infinite auto-scroll with hover pause + drag
 const dock = document.getElementById('dock');
 const track = document.getElementById('dock-track');
 
@@ -118,7 +112,6 @@ function buildDockItems(container) {
   });
 }
 
-// Build two copies for seamless loop
 buildDockItems(track);
 const clone = track.cloneNode(true);
 clone.querySelectorAll('.dock-item').forEach((item, i) => {
@@ -129,7 +122,6 @@ clone.querySelectorAll('.dock-item').forEach((item, i) => {
 });
 dock.appendChild(clone);
 
-// Auto scroll
 let scrollX = 0;
 let scrollSpeed = 0.6;
 let scrollPaused = false;
@@ -150,7 +142,6 @@ function animateScroll() {
   rafId = requestAnimationFrame(animateScroll);
 }
 
-// Better approach: use a single wrapper with JS offsetting
 dock.style.position = 'relative';
 dock.style.overflow = 'hidden';
 track.style.position = 'absolute';
@@ -168,7 +159,6 @@ function startScrollAnim() {
     }
     rafId = requestAnimationFrame(step);
   }
-  // Wait for images to load so scrollWidth is correct
   setTimeout(() => {
     clone.style.left = (track.scrollWidth + 18) + 'px';
     step();
@@ -179,7 +169,6 @@ startScrollAnim();
 function pauseScroll() { scrollPaused = true; }
 function resumeScroll() { scrollPaused = false; }
 
-// Dock drag-to-scroll
 let dockDragScrolling = false, dockStartX2 = 0, dockScrollXAtStart = 0;
 dock.addEventListener('mousedown', e => {
   if (e.target.closest('.dock-item')) return;
@@ -197,7 +186,6 @@ document.addEventListener('mousemove', e => {
   scrollX = dockScrollXAtStart + dx;
 });
 
-// About modal
 function toggleAbout() {
   document.getElementById('about-overlay').classList.toggle('open');
 }
@@ -210,12 +198,10 @@ document.getElementById('about-btn').addEventListener('mouseenter', () => cursor
 document.getElementById('about-btn').addEventListener('mouseleave', () => cursor.classList.remove('grab'));
 document.getElementById('about-close').addEventListener('mouseenter', () => cursor.classList.add('grab'));
 document.getElementById('about-close').addEventListener('mouseleave', () => cursor.classList.remove('grab'));
-// Close with Escape
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeAbout();
 });
 
-// Initial card visible
 setTimeout(() => {
   const defaultChar = characters.find(c=>c.id==='cinnamoroll');
   updateCharCard(defaultChar);
@@ -248,7 +234,6 @@ document.addEventListener('mouseup', e => {
   document.getElementById('iso-lid-group').classList.remove('peek');
   document.getElementById('gift-box-container').classList.remove('drag-near');
   
-  // Check drop target — stage has NO snap radius now, just drop anywhere on globe
   const stageRect = document.getElementById('globe-dome').getBoundingClientRect();
   const stCX = stageRect.left + stageRect.width/2;
   const stCY = stageRect.top + stageRect.height/2;
@@ -276,7 +261,6 @@ function dropOnStage(ch, x, y) {
   document.getElementById('stage-char-display').style.fontSize = '';
   document.getElementById('stage-hint').classList.add('hidden');
   
-  // Update card
   updateCharCard(ch);
   spawnRipple(x, y, 'stage');
   spawnParticles(x, y, ch.color);
@@ -296,7 +280,6 @@ function updateCharCard(ch) {
     document.getElementById('card-stat-spirit').textContent = ch.spirit + ' ♡';
     const stars = '★'.repeat(ch.mood) + '☆'.repeat(5-ch.mood);
     document.getElementById('card-stars').textContent = stars;
-    // Tags
     const tags = ch.tags;
     for (let i=0;i<3;i++) {
       const el = document.getElementById('tag-'+i);
@@ -315,12 +298,10 @@ function dropInBox(ch, x, y) {
   spawnParticles(x, y, ch.color);
   playSound('drop');
 
-  // Lid open animation
   const lid = document.getElementById('iso-lid-group');
   lid.classList.remove('peek');
   lid.classList.add('open');
 
-  // Add char icon inside box (SVG approach)
   const boxItemsSvg = document.getElementById('box-items-svg');
   const offsetX = (collected.length - 1) * 22 - (Math.min(collected.length,4)-1)*11;
   const fo = document.createElementNS('http://www.w3.org/2000/svg','image');
@@ -331,10 +312,8 @@ function dropInBox(ch, x, y) {
   fo.style.filter = 'drop-shadow(0 2px 4px rgba(200,100,130,0.35))';
   boxItemsSvg.appendChild(fo);
 
-  // Lid closes after short delay
   setTimeout(() => { lid.classList.remove('open'); }, 900);
 
-  // Squash box body
   const boxEl = document.getElementById('gift-box-container');
   setTimeout(() => {
     boxEl.style.transition = 'transform 0.12s';
@@ -365,16 +344,13 @@ function openGiftBox() {
   const modal = document.getElementById('modal-overlay');
   modal.classList.add('open');
   
-  // Fill modal chars
   const charsInside = document.getElementById('modal-chars-inside');
   charsInside.innerHTML = collected.map((c,i) => `<span class="modal-char" style="animation-delay:${i*0.1}s"><img src="${c.img}" alt="${c.name}" style="width:40px;height:40px;object-fit:contain;"></span>`).join('');
   
-  // Generate message
   const { msg, sub } = generateMessage(collected);
   document.getElementById('modal-message').textContent = msg;
   document.getElementById('modal-submessage').textContent = sub;
   
-  // Tags
   const allTags = [...new Set(collected.flatMap(c=>c.tags))].slice(0,4);
   document.getElementById('modal-tags').innerHTML = allTags.map(t=>`<span class="modal-tag">${t}</span>`).join('');
   
@@ -408,7 +384,6 @@ function surpriseMe() {
   dropOnStage(picks[0], window.innerWidth/2, window.innerHeight/2);
 }
 
-// Effects
 function spawnRipple(x, y, type) {
   const r = document.createElement('div');
   r.className = 'drop-ripple';
@@ -431,7 +406,6 @@ function spawnParticles(x, y, color) {
   }
 }
 
-// Sounds
 let audioCtx;
 function getAudio() {
   if (!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
@@ -478,14 +452,11 @@ function playSound(type) {
   } catch(e){}
 }
 
-// Hover cursors
 document.querySelectorAll('#gift-box-container,#open-box-btn,#surprise-btn,#modal-close').forEach(el => {
   el.addEventListener('mouseenter', () => cursor.classList.add('grab'));
   el.addEventListener('mouseleave', () => cursor.classList.remove('grab'));
 });
 
-// ===== MOBILE LAYOUT =====
-// Detect touch device reliably — works regardless of Safari desktop/mobile setting
 const isMobile = () => {
   const hasTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
   const isNarrow = window.innerWidth < 1200;
@@ -497,23 +468,18 @@ const isMobile = () => {
 function initMobile() {
   if (!isMobile()) return;
 
-  // Add class to body — triggers all mobile CSS
   document.body.classList.add('is-mobile');
 
-  // Fix default stage display — remove ✦ symbol
   document.getElementById('stage-char-display').textContent = '';
 
-  // Show mobile screens
   document.getElementById('mobile-screen-1').style.display = 'flex';
   document.getElementById('mobile-screen-2').style.display = 'flex';
   document.getElementById('mobile-scroll-hint').style.display = 'flex';
 
-  // Move stage + card into mobile screen 1
   const s1 = document.getElementById('mobile-screen-1');
   s1.appendChild(document.getElementById('char-card'));
   s1.appendChild(document.getElementById('stage-area'));
 
-  // Build mobile char grid
   const grid = document.getElementById('mobile-char-grid');
   grid.innerHTML = '';
   characters.forEach(ch => {
@@ -526,12 +492,10 @@ function initMobile() {
       </div>
       <div class="mobile-char-name">${ch.name.split(' ')[0]}</div>
     `;
-    // Tap → stage
     item.addEventListener('click', () => mobileSelectChar(ch, item));
     grid.appendChild(item);
   });
 
-  // Make mobile gift box a drag target
   const mbox = document.getElementById('mobile-box-container');
   mbox.addEventListener('dragover', e => { e.preventDefault(); document.getElementById('mobile-iso-lid')?.classList.add('peek'); });
   mbox.addEventListener('dragleave', () => { document.getElementById('mobile-iso-lid')?.classList.remove('peek'); });
@@ -543,7 +507,6 @@ function initMobile() {
     if (ch) mobileDropInBox(ch);
   });
 
-  // Make char items draggable to mobile box
   grid.querySelectorAll('.mobile-char-item').forEach((item, i) => {
     const ch = characters[i];
     item.draggable = true;
@@ -554,7 +517,6 @@ function initMobile() {
     item.addEventListener('dragend', () => { item.style.opacity = ''; });
   });
 
-  // Touch drag support for mobile
   let touchDragging = null;
   let touchGhost = null;
   grid.querySelectorAll('.mobile-char-item').forEach((item, i) => {
@@ -590,7 +552,6 @@ function initMobile() {
     });
   });
 
-  // Hide scroll hint when screen 2 is visible using IntersectionObserver
   const hint = document.getElementById('mobile-scroll-hint');
   const screen2 = document.getElementById('mobile-screen-2');
   const observer = new IntersectionObserver(entries => {
@@ -606,15 +567,11 @@ let mobileStageChar = null;
 
 function mobileSelectChar(ch, item) {
   mobileStageChar = ch;
-  // Scroll to top (screen 1)
   document.getElementById('app').scrollTo({ top: 0, behavior: 'smooth' });
-  // Update desktop card (reuse existing function)
   updateCharCard(ch);
   document.getElementById('char-card').classList.add('visible');
-  // Update stage display
   document.getElementById('stage-char-display').innerHTML = `<img src="${ch.img}" alt="${ch.name}" style="width:66px;height:66px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(74,55,40,0.15));">`;
   document.getElementById('stage-hint').classList.add('hidden');
-  // Highlight selected
   document.querySelectorAll('.mobile-char-circle').forEach(c => c.classList.remove('selected'));
   item.querySelector('.mobile-char-circle').classList.add('selected');
   playSound('snap');
@@ -626,14 +583,12 @@ function mobileDropInBox(ch) {
   mobileCollected.push(ch);
   playSound('drop');
 
-  // Lid open
   const lid = document.getElementById('mobile-iso-lid');
   if (lid) {
     lid.classList.add('open');
     setTimeout(() => lid.classList.remove('open'), 900);
   }
 
-  // Add char to SVG
   const svgItems = document.getElementById('mobile-box-items-svg');
   if (svgItems) {
     const offsetX = (mobileCollected.length - 1) * 18 - (Math.min(mobileCollected.length,4)-1)*9;
@@ -645,7 +600,6 @@ function mobileDropInBox(ch) {
     svgItems.appendChild(img);
   }
 
-  // Box squash
   const bc = document.getElementById('mobile-box-container');
   bc.style.transition = 'transform 0.12s';
   bc.style.transform = 'scaleY(0.94)';
@@ -675,12 +629,10 @@ function shakeBox() {
   setTimeout(() => b.style.animation = '', 500);
 }
 
-// Add boxShake keyframes dynamically
 const shakeStyle = document.createElement('style');
 shakeStyle.textContent = `@keyframes boxShake { 0%,100%{transform:rotate(0)} 20%{transform:rotate(-3deg) scale(1.02)} 40%{transform:rotate(3deg) scale(1.05)} 60%{transform:rotate(-2deg)} 80%{transform:rotate(2deg)} }`;
 document.head.appendChild(shakeStyle);
 
-// Init on load and resize
 window.addEventListener('load', initMobile);
 window.addEventListener('resize', () => {
   if (isMobile()) initMobile();
@@ -717,7 +669,6 @@ function lsTrigger() {
   lsDone = true;
   playSound('open');
 
-  // Particle burst
   const colors = ['#fce8f0','#f0c8d8','#e8d4f8','#d0e8f8','#f8f0c8','#c8f0e0'];
   for (let i = 0; i < 36; i++) {
     const p = document.createElement('div');
