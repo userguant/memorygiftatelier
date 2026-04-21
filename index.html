@@ -10,13 +10,11 @@
 </head>
 <body>
 
-<!-- Portrait lock -->
 <div id="portrait-lock">
   <div class="rotate-icon">📱</div>
   <div class="rotate-text">Please rotate your device<br>to landscape mode ✦</div>
 </div>
 
-<!-- ===== LOADING SCREEN ===== -->
 <div id="loading-screen">
   <div id="ls-bg"></div>
   <div id="ribbon-h"></div>
@@ -42,12 +40,10 @@
     </div>
   </div>
 </div>
-<!-- ===== END LOADING SCREEN ===== -->
 
 <div id="cursor"></div>
 
 <div id="app">
-  <!-- LEFT: Character detail card -->
   <div id="char-card">
     <div id="card-inner">
       <div id="card-char-name">CINNAMOROLL</div>
@@ -86,7 +82,6 @@
     </div>
   </div>
 
-  <!-- CENTER: Stage -->
   <div id="stage-area">
     <div id="stage-label">↑ drag a character onto the stage ↑</div>
     <div id="globe-wrap">
@@ -107,40 +102,27 @@
     </div>
   </div>
 
-  <!-- RIGHT: Gift box — isometric SVG -->
   <div id="gift-section">
     <div id="gift-label-top">Packaging Suite</div>
     <div id="gift-box-container" onclick="openGiftBox()">
       <div style="position:relative;width:180px;height:210px;">
         <svg id="iso-box-svg" width="180" height="210" viewBox="0 0 180 210" xmlns="http://www.w3.org/2000/svg" overflow="visible">
 
-          <!-- BOX BODY — drawn first (behind lid) -->
-          <!-- Body top open face -->
+          
           <polygon points="90,108 158,144 90,180 22,144" fill="#f8dde6" stroke="#e8a8c0" stroke-width="1.2"/>
-          <!-- Body left face -->
           <polygon points="22,144 90,180 90,205 22,169" fill="#f0c8d8" stroke="#e8a8c0" stroke-width="1.2"/>
-          <!-- Body right face -->
           <polygon points="158,144 90,180 90,205 158,169" fill="#e8b8cc" stroke="#e8a8c0" stroke-width="1.2"/>
-          <!-- Ribbon vertical -->
           <polygon points="90,108 95,111 95,205 90,205" fill="rgba(225,155,190,0.45)" stroke="none"/>
           <polygon points="90,108 85,111 85,205 90,205" fill="rgba(225,155,190,0.45)" stroke="none"/>
-          <!-- Ribbon horizontal left -->
           <polygon points="22,156 90,192 90,198 22,162" fill="rgba(215,145,182,0.4)" stroke="none"/>
-          <!-- Ribbon horizontal right -->
           <polygon points="158,156 90,192 90,198 158,162" fill="rgba(205,135,172,0.4)" stroke="none"/>
 
-          <!-- Characters inside -->
           <g id="box-items-svg" transform="translate(90,170)"></g>
 
-          <!-- LID — drawn on top of body -->
           <g id="iso-lid-group">
-            <!-- Lid top -->
             <polygon points="90,72 158,108 90,144 22,108" fill="#fce8f0" stroke="#e8a8c0" stroke-width="1.2"/>
-            <!-- Lid left face -->
             <polygon points="22,108 90,144 90,162 22,126" fill="#f4d0e4" stroke="#e8a8c0" stroke-width="1.2"/>
-            <!-- Lid right face -->
             <polygon points="158,108 90,144 90,162 158,126" fill="#ecc0d8" stroke="#e8a8c0" stroke-width="1.2"/>
-            <!-- Lid ribbon vertical -->
             <polygon points="90,72 95,75 95,162 90,162" fill="rgba(225,155,190,0.4)" stroke="none"/>
             <polygon points="90,72 85,75 85,162 90,162" fill="rgba(225,155,190,0.4)" stroke="none"/>
           </g>
@@ -153,13 +135,10 @@
     <button id="open-box-btn" onclick="openGiftBox()">✦ Open Box</button>
   </div>
 
-  <!-- BOTTOM DOCK -->
   <div id="dock"><div id="dock-track"></div></div>
 
-  <!-- MOBILE SCREEN 1: Stage + card (shown via CSS on mobile) -->
   <div id="mobile-screen-1"></div>
 
-  <!-- MOBILE SCREEN 2: Character grid + gift box -->
   <div id="mobile-screen-2">
     <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
       <div class="mobile-tap-hint">Tap to show on stage · Drag to gift box →</div>
@@ -195,21 +174,15 @@
   </div>
 </div>
 
-<!-- Mobile scroll hint -->
 <div id="mobile-scroll-hint">↓ characters</div>
 
-<!-- Surprise button -->
 <button id="surprise-btn" onclick="surpriseMe()">✦ Surprise me!</button>
 
-<!-- Date stamp removed -->
 
-<!-- Drag ghost -->
 <div id="drag-ghost"><div class="ghost-circle" id="ghost-inner"></div></div>
 
-<!-- About button -->
 <div id="about-btn" onclick="toggleAbout()">ⓘ</div>
 
-<!-- About modal -->
 <div id="about-overlay" onclick="closeAbout(event)">
   <div id="about-box">
     <div id="about-title">Memory Gift <span>Atelier</span></div>
@@ -234,10 +207,8 @@
   </div>
 </div>
 
-<!-- Overflow msg -->
 <div id="overflow-msg">That's enough! :)</div>
 
-<!-- Modal overlay -->
 <div id="modal-overlay">
   <div id="modal-box">
     <div id="modal-open-box">
