@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Gift Atelier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Caveat:wght@400;600&family=Space+Mono:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<!-- Portrait lock -->
+<div id="portrait-lock">
+  <div class="rotate-icon">📱</div>
+  <div class="rotate-text">Please rotate your device<br>to landscape mode ✦</div>
+</div>
+
+<!-- ===== LOADING SCREEN ===== -->
+<div id="loading-screen">
+  <div id="ls-bg"></div>
+  <div id="ribbon-h"></div>
+  <div id="ribbon-v"></div>
+  <div id="ls-bow">
+    <img src="./coverimages/Pink%20Ribbon.png" alt="">
+  </div>
+  <div id="ls-buttons">
+    <img src="./coverimages/buttons.png" alt="">
+  </div>
+  <div id="ls-hold">
+    <div id="ls-progress-wrap">
+      <svg viewBox="0 0 56 56">
+        <circle cx="28" cy="28" r="24" stroke-width="3" stroke="rgba(210,150,170,0.2)" fill="none"/>
+        <circle id="ls-fill" cx="28" cy="28" r="24" stroke-dasharray="151" stroke-dashoffset="151"/>
+      </svg>
+      <div id="ls-icon">🎀</div>
+    </div>
+    <div id="ls-prompt">
+      <span class="chev">&gt;&gt;</span>
+      Hold <span class="key-badge">Space</span> to unwrap
+      <span class="chev">&lt;&lt;</span>
+    </div>
+  </div>
+</div>
+<!-- ===== END LOADING SCREEN ===== -->
+
+<div id="cursor"></div>
+
+<div id="app">
+  <!-- LEFT: Character detail card -->
+  <div id="char-card">
+    <div id="card-inner">
+      <div id="card-char-name">CINNAMOROLL</div>
+      <div id="card-illustration">
+        <div class="char-big" id="card-big-char">🐰</div>
+      </div>
+      <div id="card-description">Fluffy, cloud-like and dreamy — always floating above reality.</div>
+      <div id="card-stats">
+        <div class="stat-row">
+          <div class="stat-label">Specs</div>
+          <div class="stat-value">Fluffy ✦</div>
+          <div class="stat-value" style="font-size:9px;color:var(--text-muted)" id="card-stat-level">Level 9/10</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label">Character</div>
+          <div class="stat-value" id="card-stat-char">Curious & Sweet</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label">Mood Index</div>
+          <div class="stat-stars" id="card-stars">★★★★☆</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label">Personality</div>
+          <div class="stat-value" id="card-stat-personality">Dreamy</div>
+        </div>
+        <div class="stat-row" style="grid-column:1/-1">
+          <div class="stat-label">Guardian Spirit</div>
+          <div class="stat-value" id="card-stat-spirit">Friendship ♡</div>
+        </div>
+      </div>
+      <div id="card-good-for">
+        <span class="good-tag" id="tag-0">quiet moments</span>
+        <span class="good-tag" id="tag-1">dreaming</span>
+        <span class="good-tag" id="tag-2">comfort</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER: Stage -->
+  <div id="stage-area">
+    <div id="stage-label">↑ drag a character onto the stage ↑</div>
+    <div id="globe-wrap">
+      <div id="globe-dome">
+        <div id="dome-cap"></div>
+        <div id="globe-dome-inner" style="position:absolute;inset:0;border-radius:50%;display:flex;align-items:flex-end;justify-content:center;padding-bottom:24px;">
+          <div id="stage-char-display"></div>
+        </div>
+        <div id="dome-stage-floor"></div>
+      </div>
+      <div id="stage-hint">Drag a character here</div>
+      <div id="pedestal-base">
+        <div id="stage-uplight"></div>
+        <div id="pedestal-top"></div>
+        <div id="pedestal-body"></div>
+        <div id="pedestal-bottom"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Gift box — isometric SVG -->
+  <div id="gift-section">
+    <div id="gift-label-top">Packaging Suite</div>
+    <div id="gift-box-container" onclick="openGiftBox()">
+      <div style="position:relative;width:180px;height:210px;">
+        <svg id="iso-box-svg" width="180" height="210" viewBox="0 0 180 210" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+
+          <!-- BOX BODY — drawn first (behind lid) -->
+          <!-- Body top open face -->
+          <polygon points="90,108 158,144 90,180 22,144" fill="#f8dde6" stroke="#e8a8c0" stroke-width="1.2"/>
+          <!-- Body left face -->
+          <polygon points="22,144 90,180 90,205 22,169" fill="#f0c8d8" stroke="#e8a8c0" stroke-width="1.2"/>
+          <!-- Body right face -->
+          <polygon points="158,144 90,180 90,205 158,169" fill="#e8b8cc" stroke="#e8a8c0" stroke-width="1.2"/>
+          <!-- Ribbon vertical -->
+          <polygon points="90,108 95,111 95,205 90,205" fill="rgba(225,155,190,0.45)" stroke="none"/>
+          <polygon points="90,108 85,111 85,205 90,205" fill="rgba(225,155,190,0.45)" stroke="none"/>
+          <!-- Ribbon horizontal left -->
+          <polygon points="22,156 90,192 90,198 22,162" fill="rgba(215,145,182,0.4)" stroke="none"/>
+          <!-- Ribbon horizontal right -->
+          <polygon points="158,156 90,192 90,198 158,162" fill="rgba(205,135,172,0.4)" stroke="none"/>
+
+          <!-- Characters inside -->
+          <g id="box-items-svg" transform="translate(90,170)"></g>
+
+          <!-- LID — drawn on top of body -->
+          <g id="iso-lid-group">
+            <!-- Lid top -->
+            <polygon points="90,72 158,108 90,144 22,108" fill="#fce8f0" stroke="#e8a8c0" stroke-width="1.2"/>
+            <!-- Lid left face -->
+            <polygon points="22,108 90,144 90,162 22,126" fill="#f4d0e4" stroke="#e8a8c0" stroke-width="1.2"/>
+            <!-- Lid right face -->
+            <polygon points="158,108 90,144 90,162 158,126" fill="#ecc0d8" stroke="#e8a8c0" stroke-width="1.2"/>
+            <!-- Lid ribbon vertical -->
+            <polygon points="90,72 95,75 95,162 90,162" fill="rgba(225,155,190,0.4)" stroke="none"/>
+            <polygon points="90,72 85,75 85,162 90,162" fill="rgba(225,155,190,0.4)" stroke="none"/>
+          </g>
+
+        </svg>
+        <div id="box-items" style="position:absolute;bottom:2px;left:0;right:0;display:none;"></div>
+      </div>
+    </div>
+    <div id="item-counter">0 / 5 items</div>
+    <button id="open-box-btn" onclick="openGiftBox()">✦ Open Box</button>
+  </div>
+
+  <!-- BOTTOM DOCK -->
+  <div id="dock"><div id="dock-track"></div></div>
+
+  <!-- MOBILE SCREEN 1: Stage + card (shown via CSS on mobile) -->
+  <div id="mobile-screen-1"></div>
+
+  <!-- MOBILE SCREEN 2: Character grid + gift box -->
+  <div id="mobile-screen-2">
+    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+      <div class="mobile-tap-hint">Tap to show on stage · Drag to gift box →</div>
+      <div id="mobile-char-grid"></div>
+    </div>
+    <div id="mobile-gift-section">
+      <div id="mobile-gift-label">Packaging Suite</div>
+      <div id="mobile-box-container" onclick="mobileOpenBox()">
+        <div style="position:relative;width:140px;height:160px;">
+          <svg width="140" height="160" viewBox="0 0 180 210" xmlns="http://www.w3.org/2000/svg" overflow="visible" id="mobile-iso-svg">
+            <polygon points="90,108 158,144 90,180 22,144" fill="#f8dde6" stroke="#e8a8c0" stroke-width="1.2"/>
+            <polygon points="22,144 90,180 90,210 22,174" fill="#f0c8d8" stroke="#e8a8c0" stroke-width="1.2"/>
+            <polygon points="158,144 90,180 90,210 158,174" fill="#e8b8cc" stroke="#e8a8c0" stroke-width="1.2"/>
+            <polygon points="90,108 95,111 95,210 90,210" fill="rgba(225,155,190,0.4)"/>
+            <polygon points="90,108 85,111 85,210 90,210" fill="rgba(225,155,190,0.4)"/>
+            <polygon points="22,159 90,195 90,201 22,165" fill="rgba(230,168,198,0.5)"/>
+            <polygon points="158,159 90,195 90,201 158,165" fill="rgba(218,155,188,0.5)"/>
+            <g id="mobile-iso-lid">
+              <polygon points="90,72 158,108 90,144 22,108" fill="#fce8f0" stroke="#e8a8c0" stroke-width="1.2"/>
+              <polygon points="22,108 90,144 90,162 22,126" fill="#f4d0e4" stroke="#e8a8c0" stroke-width="1.2"/>
+              <polygon points="158,108 90,144 90,162 158,126" fill="#ecc0d8" stroke="#e8a8c0" stroke-width="1.2"/>
+              <polygon points="90,72 95,75 95,162 90,162" fill="rgba(225,155,190,0.4)"/>
+              <polygon points="90,72 85,75 85,162 90,162" fill="rgba(225,155,190,0.4)"/>
+            </g>
+            <g id="mobile-box-items-svg" transform="translate(90,165)"></g>
+          </svg>
+        </div>
+      </div>
+      <div id="mobile-item-counter">0 / 5 items</div>
+      <button id="mobile-open-btn" onclick="mobileOpenBox()">✦ Open</button>
+      <button style="font-family:'Caveat',cursive;font-size:12px;color:var(--text-muted);border:1px solid var(--sand);background:transparent;padding:4px 12px;border-radius:20px;cursor:pointer;margin-top:4px;" onclick="surpriseMe()">✦ Surprise</button>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile scroll hint -->
+<div id="mobile-scroll-hint">↓ characters</div>
+
+<!-- Surprise button -->
+<button id="surprise-btn" onclick="surpriseMe()">✦ Surprise me!</button>
+
+<!-- Date stamp removed -->
+
+<!-- Drag ghost -->
+<div id="drag-ghost"><div class="ghost-circle" id="ghost-inner"></div></div>
+
+<!-- About button -->
+<div id="about-btn" onclick="toggleAbout()">ⓘ</div>
+
+<!-- About modal -->
+<div id="about-overlay" onclick="closeAbout(event)">
+  <div id="about-box">
+    <div id="about-title">Memory Gift <span>Atelier</span></div>
+
+    <div id="about-divider"></div>
+
+    <div id="about-concept">
+      Memory Gift Atelier is a digital gifting ritual.<br><br>
+      Each Sanrio character carries an emotional frequency — a quiet mood, a burst of energy, a soft comfort. By selecting and assembling them into a gift box, you're not just collecting cute things. You're curating a feeling.<br><br>
+      The gift you build becomes a small constellation of who you are right now.
+    </div>
+
+    <div id="about-how-title">How to play</div>
+    <div id="about-steps">
+      <div class="about-step"><div class="about-step-dot"></div><span>Drag a character from the bottom dock onto the Exhibition Stage to learn about them</span></div>
+      <div class="about-step"><div class="about-step-dot"></div><span>Drag characters into the gift box on the right to collect them (up to 5)</span></div>
+      <div class="about-step"><div class="about-step-dot"></div><span>Once you've gathered your selection, click the box to reveal your gift message</span></div>
+      <div class="about-step"><div class="about-step-dot"></div><span>Or hit ✦ Surprise me! to let the Atelier choose for you</span></div>
+    </div>
+
+    <button id="about-close" onclick="closeAbout()">✦ Close</button>
+  </div>
+</div>
+
+<!-- Overflow msg -->
+<div id="overflow-msg">That's enough! :)</div>
+
+<!-- Modal overlay -->
+<div id="modal-overlay">
+  <div id="modal-box">
+    <div id="modal-open-box">
+      <div class="modal-lid"></div>
+      <div class="modal-body" id="modal-chars-inside"></div>
+    </div>
+    <div id="modal-message">A small moment of softness.</div>
+    <div id="modal-submessage">You've assembled a little constellation of feelings.</div>
+    <div id="modal-tags"></div>
+    <button id="modal-close" onclick="closeModal()">✦ Keep this gift</button>
+  </div>
+</div>
+
+<script src="./js/main.js"></script>
+</body>
+</html>
